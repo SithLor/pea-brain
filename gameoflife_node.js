@@ -9,12 +9,16 @@ global.Canvas = createCanvas;
 
 // Define cell size and grid dimensions
 const cellSize = 10;
-const canvasSize = 1000;
-const numRows = Math.floor(canvasSize / cellSize);
-const numCols = Math.floor(canvasSize / cellSize);
+const canvasSize_x = 1000;
+const canvasSize_y = 1000;
+const max_iterations = 30*30;
+const delay = 0;
+
+const numRows = Math.floor(canvasSize_y / cellSize);
+const numCols = Math.floor(canvasSize_x / cellSize);
 
 // Initialize canvas and context
-const canvas = createCanvas(canvasSize, canvasSize);
+const canvas = createCanvas(canvasSize_x, canvasSize_y);
 const ctx = canvas.getContext('2d');
 
 // The rest of the game logic goes here, same as in the HTML file...
@@ -45,7 +49,8 @@ let animationId = null;
 
 // Function to draw the grid
 function drawGrid() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
             if (grid[i][j] === 1) {
@@ -101,40 +106,19 @@ function mainLoop() {
     }
 }
 
-document.getElementById('startButton')
-          .addEventListener('click', function () {
-    if (!isRunning) {
-        isRunning = true;
-        mainLoop();
-    }
-});
 
-document.getElementById('pauseButton')
-          .addEventListener('click',
-    function () {
-    isRunning = false;
-    cancelAnimationFrame(animationId);
-});
 
-document.getElementById('restartButton')
-          .addEventListener('click',
-    function () {
-    isRunning = false;
-    cancelAnimationFrame(animationId);
-    grid = createGrid();
-    drawGrid();
-});
+
 
 // Modify the mainLoop function to save a PNG on each iteration
 let iteration = 0;
-let max_iterations = 100;
 function mainLoop() {
     updateGrid();
     drawGrid();
     saveCanvasAsPNG(iteration);
     iteration++;
     if (isRunning) {
-        setTimeout(mainLoop, 1000); // Delay to simulate requestAnimationFrame
+        setTimeout(mainLoop, delay); // Delay to simulate requestAnimationFrame
     }
     if (iteration >= max_iterations) {
         isRunning = false;
