@@ -9,9 +9,9 @@ global.Canvas = createCanvas;
 
 // Define cell size and grid dimensions
 const cellSize = 10;
-const canvasSize_x = 1000;
-const canvasSize_y = 1000;
-const max_iterations = 30*30;
+const canvasSize_x = 500;
+const canvasSize_y = 500;
+const max_iterations = 100*100;
 const delay = 0;
 
 const numRows = Math.floor(canvasSize_y / cellSize);
